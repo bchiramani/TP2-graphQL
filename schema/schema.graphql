@@ -1,0 +1,58 @@
+enum TodoStatus{
+    WAITING 
+    IN_PROGRESS 
+    CANCLED
+    DONE
+
+}
+
+
+type Todo{
+    id:String!
+    name :String!
+    content:String!
+    status:TodoStatus!
+    user:User!
+
+}
+
+type User{
+    id:String!
+    name:String!
+    email:String!
+    todos:[Todo]
+}
+
+type Query{
+    getTodos(id:String!):Todo
+    getUsersTodos(id:String!):[Todo]
+
+
+}
+
+
+type Mutation{
+    addTodo(addTodoInput:AddTodoInput):Todo
+    editTodo(editTodoInput:EditTodoInput):Todo
+    deleteTodo(id:String)
+}
+input AddTodoInput{
+    name :String!
+    content:String!
+    status:TodoStatus!
+    user:User!
+}
+
+
+input editTodoInput{
+    id:String!
+    name :String!
+    content:String!
+    status:TodoStatus!
+    user:User!
+}
+
+type Subscription {
+    newTodo :Todo
+
+}
