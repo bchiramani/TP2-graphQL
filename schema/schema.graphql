@@ -32,9 +32,9 @@ type Query{
 
 
 type Mutation{
-    addTodo(addTodoInput:AddTodoInput):Todo
-    editTodo(editTodoInput:EditTodoInput):Todo
-    deleteTodo(id:String)
+    addTodo(addTodoInput:AddTodoInput):Todo!
+    editTodo(id:Int!,editTodoInput:EditTodoInput!):Todo!
+    deleteTodo(id:Int!)
 }
 input AddTodoInput{
     name :String!
@@ -43,6 +43,10 @@ input AddTodoInput{
     user:User!
 }
 
+type TodoSubscription {
+  todo: Todo!
+  mutation: MutationOperationType!
+}
 
 input editTodoInput{
     id:String!
@@ -53,6 +57,11 @@ input editTodoInput{
 }
 
 type Subscription {
-    newTodo :Todo
+    newTodo :TodoSubscriptio!
 
+}
+enum MutationOperationType {
+  UPDATE
+  DELETE
+  ADD
 }

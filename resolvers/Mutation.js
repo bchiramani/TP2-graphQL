@@ -1,5 +1,5 @@
 export const Mutation = {
-    addTodo: (parent, { addTodoInput }, { db, pubsub }, infos) => {
+    addTodo: (parent, { addTodoInput }, { db, pubsub }, info) => {
         if (!existInArray(db.users, "id", addTodoInput.user)) {
             throw new Error("not such a user . Please verify")
         } else {
@@ -12,12 +12,12 @@ export const Mutation = {
     },
     editTodo: (parent, { id, editTodoInput }, { db, pubsub }, info) => {
         if (editTodoInput.user && !existInArray(db.users, "id", editTodoInput.user)) {
-            throw new Error("not such a user . Please verify");
+            throw new Error("no such a user . Please verify");
         } else {
             //Il faut que l'id du todo existe
             const todo = db.todos.find((todoItem) => todoItem.id === id);
             if (!todo) {
-                throw new Error("todo n existe pas");
+                throw new Error("no such todo");
             } else {
                 for (let key in editTodoInput) {
                     todo[key] = editTodoInput[key];
@@ -38,4 +38,8 @@ export const Mutation = {
         }
     },
 
+}
+
+function existInArray(array, attribut, value) {
+    return array.some((element) => element[attribut] == value);
 }
